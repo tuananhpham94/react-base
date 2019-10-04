@@ -8,8 +8,8 @@
     text-align: center;
 }
 
-/* @media (min-width: 500px) {
+@media (min-width: 550px) {
     .Person {
-        width: 500px;
+        width: 200px;
     }
-} */
+} 
