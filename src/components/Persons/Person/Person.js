@@ -1,15 +1,24 @@
-import React from 'react';
+import React, {Component, Fragment} from 'react';
 import classes from './Person.css';
+import Aux from '../../../hoc/Auxillary';
 
-const person = (props) => {
+class Person extends Component{
+    render(){
+        console.log('[Person.js] rendering...');
 
-    return (
-      
-        <div className={classes.Person}>
-            <p onClick={props.click}>I'm a {props.name} and I am {props.age} years ago!</p>
-            <p>{props.children}</p>
-            <input type="text" onChange={props.changed} value={props.name}/>
-        </div>
-    )
+        return (
+                <Fragment>
+                <p key="i1" onClick={this.props.click}>
+                    I'm a {this.props.name} and I am {this.props.age} years ago!
+                    </p>
+                <p key="i2">{this.props.children}</p>
+                <input key="i3"
+                    type="text" 
+                    onChange={this.props.changed} 
+                    value={this.props.name}/>
+                    </Fragment>
+                );
+    }
+   
 }
-export default person;
+export default Person;

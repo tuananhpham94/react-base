@@ -2,15 +2,40 @@ import React, { Component } from 'react';
 import cls from './App.css';
 import Cockpit from '../components/Cockpit/Cockpit';
 import Persons from '../components/Persons/Persons';
+import withClass from '../hoc/withClass';
+import Aux from '../hoc/Auxillary';
 class App extends Component {
-  state = {
-    persons: [
-      {id:1, name: 'Daniel', age: 26},
-      {id:2, name: 'Ly', age: 25},
-      {id:3, name: 'test', age: 25}
-    ],
-    otherState: 'test',
-    showPersons: false
+  constructor(props) {
+    super(props);
+    console.log('[App.js] constructor');
+    this.state = {
+      persons: [
+        {id:1, name: 'Daniel', age: 26},
+        {id:2, name: 'Ly', age: 25},
+        {id:3, name: 'test', age: 25}
+      ],
+      otherState: 'test',
+      showPersons: false,
+      showCockpit: true
+    }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedStateFromProps' + props);
+    return state;
+  }
+
+  componentDidMount() {
+    console.log('[App.js] componentDidMount');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate');
+    return true;
+  }
+
+  componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate');
   }
 
   deletePersonHandler = (personIndex) => {
@@ -46,7 +71,7 @@ class App extends Component {
  
 
   render() {
-
+    console.log('[App.js] render');
     let persons = null;
     if (this.state.showPersons){
       persons = <Persons 
@@ -59,17 +84,22 @@ class App extends Component {
     
 
     return (
-        <div className={cls.App}>
+       <Aux>
+          <button onClick={() => {
+            this.setState({showCockpit: false});
+          }}>remove Cockpit</button>
+          {this.state.showCockpit ? 
           <Cockpit 
+          title={this.props.appTitle}
           showPersons={this.state.showPersons}
-          persons={this.state.persons}
+          personsLength={this.state.persons.length}
           clicked={this.togglePersonsHandler}
-          />
+          /> : null }
           {persons}
-        </div>
+          </Aux>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'should be wokr'));
   }
 }
 
-export default App;
+export default withClass(App, cls.App);
